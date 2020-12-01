@@ -1,7 +1,7 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  flex: .35;
+  flex: 0.35;
 }
 
 .sidebar-header {
@@ -54,7 +54,5 @@
 .sidebar-chats {
   flex: 1;
   background-color: #fff;
-  overflow: scroll;
-  
+  overflow-y: scroll;
 }
-

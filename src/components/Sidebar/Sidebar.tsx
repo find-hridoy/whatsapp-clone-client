@@ -13,7 +13,7 @@ type HeaderProps = {
 }
 
 const Sidebar = ( props: HeaderProps) => {
-  console.log(props.text);
+  // console.log(props.text);
   return (
     <div className="sidebar">
       <div className="sidebar-header">

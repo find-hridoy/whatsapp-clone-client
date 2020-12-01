@@ -49,7 +49,9 @@ const Chat: React.FC = () => {
       </div>
 
       <div className="chat-footer">
+      <IconButton size="small">
         <InsertEmoticonIcon />
+        </IconButton>
         <form action="">
           <input
             placeholder="Type a message"
@@ -59,7 +61,9 @@ const Chat: React.FC = () => {
             Send a message
           </button>
         </form>
+        <IconButton size="small">
         <MicIcon/>
+        </IconButton>
       </div>
     </div>
   );

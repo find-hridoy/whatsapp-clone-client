@@ -1,43 +1,46 @@
-import React, { useEffect, useState } from 'react';
+
+import React, { useState, createContext } from 'react';
+
 import './app.css';
-import Chat from './components/Chat/Chat';
+import Login from './components/Login/Login';
+import ChatBody from './components/ChatBody/ChatBody';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import { Chat } from '@material-ui/icons';
 import Sidebar from './components/Sidebar/Sidebar';
 import Pusher from 'pusher-js';
 
-interface IProject {
-  type: Array<string>;
-  text: String;
-}
- function App () {
-   const [messages, setMessages] = useState<IProject[]>([]);
-   useEffect(()=>{
-     fetch("http://localhost:5000/message/show")
-     .then(res => res.json())
-     .then ( data => setMessages(data))
-   }, [])
-   useEffect(()=>{
-    const pusher = new Pusher('2be980cecf9a2313cfd7', {
-      cluster: 'mt1'
-    });
 
-    const channel = pusher.subscribe('messages');
-    channel.bind('inserted', (result : any ) => {
-      // alert(JSON.stringify(result));
-      setMessages([...messages, result]);
-    });
-    return () =>{
-      channel.unbind_all();
-      channel.unsubscribe();
-    }
-   }, [messages])
-  //  console.log(messages);
+
+export const UserContext = createContext<any>([]);
+
+function App() {
+  
+  const [loggedInUser, setLoggedInUser] = useState({})
+  
+  console.log(loggedInUser);
+
   return (
-    <div className="app">
-      <div className="app-body">
-        <Sidebar text="hello world"/>
-        <Chat/>
-      </div>
-    </div>
+    <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <Login/>
+        </Route>
+        <Route exact path="/login">
+          <Login/>
+        </Route>
+        <Route path="/chatbody">
+          <ChatBody/>
+        </Route>
+      </Switch>
+      </Router>
+    </UserContext.Provider>
   );
 }
 

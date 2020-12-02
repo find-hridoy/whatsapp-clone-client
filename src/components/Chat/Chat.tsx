@@ -80,7 +80,9 @@ const Chat = (props: any) => {
       </div>
 
       <div className="chat-footer">
+      <IconButton size="small">
         <InsertEmoticonIcon />
+        </IconButton>
         <form action="">
           <input
             value={input}
@@ -94,7 +96,9 @@ const Chat = (props: any) => {
             Send a message
           </button>
         </form>
+        <IconButton size="small">
         <MicIcon/>
+        </IconButton>
       </div>
     </div>
   );

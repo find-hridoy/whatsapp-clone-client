@@ -1,4 +1,6 @@
+
 import React, { useState, createContext } from 'react';
+
 import './app.css';
 import Login from './components/Login/Login';
 import ChatBody from './components/ChatBody/ChatBody';
@@ -11,7 +13,7 @@ import {
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import { Chat } from '@material-ui/icons';
 import Sidebar from './components/Sidebar/Sidebar';
-
+import Pusher from 'pusher-js';
 
 
 
@@ -22,6 +24,7 @@ function App() {
   const [loggedInUser, setLoggedInUser] = useState({})
   
   console.log(loggedInUser);
+
   return (
     <UserContext.Provider value={[loggedInUser, setLoggedInUser]}>
     <Router>

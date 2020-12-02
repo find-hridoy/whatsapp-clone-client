@@ -1,14 +1,48 @@
 import { Avatar, IconButton } from '@material-ui/core';
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import './Chat.css'
 import AttachFile from '@material-ui/icons/AttachFileOutlined';
 import DonutLargeIcon from '@material-ui/icons/DonutLarge';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticonOutlined';
 import MicIcon from '@material-ui/icons/Mic';
+import { UserContext } from '../../App';
 
 
-const Chat: React.FC = () => {
+
+interface Iinput {
+  type: Array<String>;
+  text: String;
+}
+
+
+
+
+const Chat = (props: any) => {
+
+  const [loggedInUser, setLoggedInUser]:any = useContext<any>(UserContext);
+
+  const [input, setInput] = useState<string>('')
+
+  const sendMessage = (e: any) => {
+  fetch("https://fierce-ravine-88768.herokuapp.com/message/new", {
+    method: "POST",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+    message: input,
+    name: "Hulk",
+    timestamp: "12.05",
+    revived: false
+
+    })
+  })
+    
+    console.log('Clicked');
+    e.preventDefault();
+  }
+
+ 
+
   return (
     <div className="chat">
       <div className="chat-header">
@@ -31,31 +65,32 @@ const Chat: React.FC = () => {
       </div>
 
       <div className="chat-body">
-        <p className="chat-message">
-          <span className='chat-name'>Redoy</span>
-          This is a message
-          <span className="chat-timestamp">
-            {new Date().toUTCString()}
-          </span>
-        </p>
+        {
+          props.messages.map((message:any) => (
+            <p className={`chat-message ${message.name && 'chat-receiver'}`}>
+              <span className='chat-name'>{ message.name}</span>
+            {message.message}
+            <span className="chat-timestamp">
+              {message.timestamp}
+            </span>
+          </p>
+          ))
+       }
 
-        <p className="chat-message chat-receiver">
-          <span className='chat-name'>Naiem</span>
-          This is a message
-          <span className="chat-timestamp">
-            {new Date().toUTCString()}
-          </span>
-        </p>
       </div>
 
       <div className="chat-footer">
         <InsertEmoticonIcon />
         <form action="">
           <input
+            value={input}
+            onChange={e => setInput(e.target.value)}
             placeholder="Type a message"
             type="text"
           />
-          <button type="submit">
+          <button
+            onClick={sendMessage}
+            type="submit">
             Send a message
           </button>
         </form>

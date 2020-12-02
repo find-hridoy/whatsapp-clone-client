@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './sidebar.css'
 import ChatIcon from '@material-ui/icons/Chat';
 import DonutLargeIcon from '@material-ui/icons/DonutLarge';
@@ -6,18 +6,19 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Avatar, Icon, IconButton } from '@material-ui/core';
 import { SearchOutlined } from '@material-ui/icons';
 import SidebarChat from '../SidebarChat/SidebarChat';
+import { UserContext } from '../../App';
 
 
-type HeaderProps = {
-  text: string
-}
 
-const Sidebar = ( props: HeaderProps) => {
-  console.log(props.text);
+
+const Sidebar = () => {
+
+  const [loggedInUser, setLoggedInUser] = useContext(UserContext)
+  
   return (
     <div className="sidebar">
       <div className="sidebar-header">
-        <Avatar src="https://i.ibb.co/G5FDHQZ/Cartoon-character-in-eyeglasses-Concept-of-avatar-of-bearded-man-with-bad-eyesight-Isolated-at-white.jpg"/>
+        <Avatar src={ loggedInUser.img}/>
         <div className="sidebar-headerRight">
           <IconButton>
             <DonutLargeIcon />
